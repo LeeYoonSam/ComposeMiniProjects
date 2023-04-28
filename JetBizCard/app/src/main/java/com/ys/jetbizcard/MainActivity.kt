@@ -6,10 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +24,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,6 +56,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CreateBizCard() {
+    val showPortfolioState = remember {
+        mutableStateOf(false)
+    }
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Card(
             modifier = Modifier
@@ -71,7 +80,7 @@ fun CreateBizCard() {
                 CreateInfo()
                 Button(
                     onClick = {
-
+                        showPortfolioState.value = !showPortfolioState.value
                     }
                 ) {
                     Text(
@@ -79,7 +88,42 @@ fun CreateBizCard() {
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+
+                if (showPortfolioState.value) {
+                    PortfolioContent()
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun PortfolioContent(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(15.dp)
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(3.dp)
+                .fillMaxSize(),
+            shape = RoundedCornerShape(corner = CornerSize(6.dp)),
+            border = BorderStroke(
+                width = 2.dp,
+                color = Color.LightGray
+            )
+        ) {
+            Portfolio(data = listOf("Project 1", "Project 2", "Project 3"))
+        }
+    }
+}
+
+@Composable
+fun Portfolio(data: List<String>) {
+    LazyColumn(modifier = Modifier.padding(8.dp)) {
+        items(data) { item ->
+            Text(text = item)
         }
     }
 }
@@ -128,7 +172,15 @@ private fun CreateImageProfile(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun PortfolioContentPreview() {
+    JetBizCardTheme {
+        PortfolioContent()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CreateBizCardPreview() {
     JetBizCardTheme {
         CreateBizCard()
     }
