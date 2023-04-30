@@ -11,5 +11,5 @@
 팁 계산기
 
 ### 참고
-**Container Functions**
+`Container Functions`
 - Compose 함수를 매개변수로 전달할수 있는 Compose 또는 함수
