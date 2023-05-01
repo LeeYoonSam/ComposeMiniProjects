@@ -3,6 +3,7 @@ package com.ys.jettipapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetTipApp {
                 TopHeader()
+                MainContent()
             }
         }
     }
@@ -40,7 +43,9 @@ fun JetTipApp(content: @Composable () -> Unit) {
     JetTipAppTheme {
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colorScheme.background) {
-            content()
+            Column {
+                content()
+            }
         }
     }
 }
@@ -75,10 +80,32 @@ fun TopHeader(totalPerPerson: Double = 134.0) {
     }
 }
 
+@Composable
+fun MainContent() {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 8.dp, end = 8.dp, bottom = 12.dp),
+        shape = RoundedCornerShape(corner = CornerSize(8.dp)),
+        border = BorderStroke(width = 1.dp, color = Color.LightGray)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(text = "Hello World")
+            Text(text = "Hello World")
+            Text(text = "Hello World")
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun JetTipAppPreview() {
     JetTipApp {
-        Text(text = "Hello")
+        TopHeader()
+        MainContent()
     }
 }
