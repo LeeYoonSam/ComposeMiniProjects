@@ -156,6 +156,11 @@ fun BillForm(
 
 @Composable
 fun SplitUnit() {
+
+    val splitNumber = remember {
+        mutableStateOf(1)
+    }
+
     Row(
         modifier = Modifier.padding(3.dp),
         horizontalArrangement = Arrangement.Start
@@ -174,12 +179,25 @@ fun SplitUnit() {
         ) {
             RoundIconButton(
                 imageVector = Icons.Default.Remove,
-                onClick = { Log.d("Icon", "BillForm: Removed") }
+                onClick = {
+                    Log.d("Icon", "BillForm: Removed")
+                    splitNumber.value -= 1
+                }
+            )
+
+            Text(
+                text = splitNumber.value.toString(),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = 10.dp)
             )
 
             RoundIconButton(
                 imageVector = Icons.Default.Add,
-                onClick = { Log.d("Icon", "BillForm: Add") }
+                onClick = {
+                    Log.d("Icon", "BillForm: Add")
+                    splitNumber.value += 1
+                }
             )
         }
     }
