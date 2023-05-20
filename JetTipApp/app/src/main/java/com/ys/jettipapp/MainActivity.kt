@@ -22,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -145,6 +146,7 @@ fun BillForm(
 
             if (validState) {
                 SplitUnit()
+
             } else {
                 Box() {
 
@@ -159,6 +161,10 @@ fun SplitUnit() {
 
     val splitNumber = remember {
         mutableStateOf(1)
+    }
+
+    val sliderPositionState = remember {
+        mutableStateOf(0f)
     }
 
     Row(
@@ -200,6 +206,45 @@ fun SplitUnit() {
                 }
             )
         }
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(
+                horizontal = 3.dp,
+                vertical = 12.dp
+            )
+    ) {
+        Text(
+            text = "Tip",
+            modifier = Modifier.align(Alignment.CenterVertically
+            )
+        )
+
+        Spacer(modifier = Modifier.width(200.dp))
+
+        Text(
+            text = "$33.00",
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "33%")
+
+        Spacer(modifier = Modifier.height(14.dp))
+
+        Slider(
+            value = sliderPositionState.value,
+            onValueChange = { newVal ->
+                sliderPositionState.value = newVal
+                Log.d("Slider", "BillForm: $newVal")
+            }
+        )
+
     }
 }
 
