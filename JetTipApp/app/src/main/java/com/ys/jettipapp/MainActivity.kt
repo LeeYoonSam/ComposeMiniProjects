@@ -168,6 +168,12 @@ fun SplitUnit() {
         mutableStateOf(0f)
     }
 
+    val splitByState = remember {
+        mutableStateOf(1)
+    }
+
+    val range = IntRange(start = 1, endInclusive = 100)
+
     Row(
         modifier = Modifier.padding(3.dp),
         horizontalArrangement = Arrangement.Start
@@ -187,13 +193,17 @@ fun SplitUnit() {
             RoundIconButton(
                 imageVector = Icons.Default.Remove,
                 onClick = {
-                    Log.d("Icon", "BillForm: Removed")
-                    splitNumber.value -= 1
+                    splitByState.value =
+                        if (splitByState.value > 1) {
+                            splitByState.value -1
+                        } else {
+                            1
+                        }
                 }
             )
 
             Text(
-                text = splitNumber.value.toString(),
+                text = splitByState.value.toString(),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(horizontal = 10.dp)
@@ -202,8 +212,9 @@ fun SplitUnit() {
             RoundIconButton(
                 imageVector = Icons.Default.Add,
                 onClick = {
-                    Log.d("Icon", "BillForm: Add")
-                    splitNumber.value += 1
+                    if (splitByState.value < range.last) {
+                        splitByState.value = splitByState.value + 1
+                    }
                 }
             )
         }
