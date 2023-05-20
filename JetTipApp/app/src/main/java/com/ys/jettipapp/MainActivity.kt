@@ -46,7 +46,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetTipApp {
-                TopHeader()
                 MainContent()
             }
         }
@@ -71,8 +70,8 @@ fun TopHeader(totalPerPerson: Double = 134.0) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(15.dp)
             .height(150.dp)
-            .padding(12.dp)
             .clip(shape = CircleShape.copy(all = CornerSize(12.dp))),
         color = Color(0xFFE9D7F7)
     ) {
@@ -116,6 +115,8 @@ fun BillForm(
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    TopHeader()
 
     Surface(
         modifier = Modifier
@@ -242,9 +243,16 @@ fun SplitUnit() {
             onValueChange = { newVal ->
                 sliderPositionState.value = newVal
                 Log.d("Slider", "BillForm: $newVal")
+            },
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 16.dp
+            ),
+            steps = 5,
+            onValueChangeFinished = {
+
             }
         )
-
     }
 }
 
@@ -252,7 +260,6 @@ fun SplitUnit() {
 @Composable
 fun JetTipAppPreview() {
     JetTipApp {
-        TopHeader()
         MainContent()
     }
 }
