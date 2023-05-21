@@ -160,13 +160,11 @@ fun BillForm(
 @Composable
 fun SplitUnit() {
 
-    val splitNumber = remember {
-        mutableStateOf(1)
-    }
-
     val sliderPositionState = remember {
         mutableStateOf(0f)
     }
+
+    val tipPercentage = (sliderPositionState.value * 100).toInt()
 
     val splitByState = remember {
         mutableStateOf(1)
@@ -245,7 +243,7 @@ fun SplitUnit() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "33%")
+        Text(text = "$tipPercentage %")
 
         Spacer(modifier = Modifier.height(14.dp))
 
