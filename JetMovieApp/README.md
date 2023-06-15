@@ -30,5 +30,44 @@ Jetpack Compose Navigation은 Android 앱 개발용 Jetpack Compose 도구 키�
 
 한 가지 주목할 점은 젯팩 컴포즈 내비게이션은 젯팩 컴포즈의 일부이며 다른 젯팩 컴포즈 컴포넌트 및 라이브러리와 조화롭게 작동하도록 설계되어 최신 안드로이드 앱을 빌드할 때 전반적인 개발 경험을 향상시킨다는 점입니다.
 
+### NavHost 
+```kotlin
+@Composable
+public fun NavHost(
+  navController: NavHostController,
+  startDestination: String,
+  modifier: Modifier = Modifier,
+  route: String? = null,
+  builder: NavGraphBuilder.() -> Unit
+) {
+  NavHost(
+    navController,
+    remember(route, startDestination, builder) {
+      navController.createGraph(startDestination, route, builder)
+    },
+    modifier
+  )
+}
+```
+- NavHost 코드
+
+```kotlin
+NavHost(
+    navController = navController,
+    startDestination = MovieScreens.HomeScreen.name
+) {
+    composable(MovieScreens.HomeScreen.name) {
+        // here we pass where this should lead us to
+         HomeScreen(navController = navController)
+    }
+
+    composable(MovieScreens.DetailsScreen.name) {
+        DetailScreen(navController = navController)
+    }
+}
+```
+- builder: NavGraphBuilder 에서 실제 네비게이션 그래프를 구성
+- - `MovieScreens.HomeScreen`, `MovieScreens.DetailsScreen` 2개 경로에 대한 화면 연결
+
 ## 참고
 - [Navigation](https://developer.android.com/jetpack/compose/navigation?hl=ko)
