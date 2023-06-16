@@ -2,12 +2,14 @@ package com.ys.jetmovieapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ys.jetmovieapp.MyApp
-import com.ys.jetmovieapp.screens.home.HomeScreen
 import com.ys.jetmovieapp.screens.details.DetailScreen
+import com.ys.jetmovieapp.screens.home.HomeScreen
 
 @Composable
 fun MovieNavigation() {
@@ -21,8 +23,18 @@ fun MovieNavigation() {
              HomeScreen(navController = navController)
         }
 
-        composable(MovieScreens.DetailsScreen.name) {
-            DetailScreen(navController = navController)
+        composable(
+            route = "${MovieScreens.DetailsScreen.name}/{movie}",
+            arguments = listOf(
+                navArgument(name = "movie") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            DetailScreen(
+                navController = navController,
+                backStackEntry.arguments?.getString("movie")
+            )
         }
     }
 }
