@@ -69,5 +69,130 @@ NavHost(
 - builder: NavGraphBuilder 에서 실제 네비게이션 그래프를 구성
 - - `MovieScreens.HomeScreen`, `MovieScreens.DetailsScreen` 2개 경로에 대한 화면 연결
 
-## 참고
+### 참고
 - [Navigation](https://developer.android.com/jetpack/compose/navigation?hl=ko)
+
+---
+
+## Compose 에서 Text 사용
+
+## [텍스트 오버플로](https://developer.android.com/jetpack/compose/text?hl=ko#text-overflow)
+
+긴 텍스트를 제한할 때 표시된 텍스트가 잘린 경우에만 표시되는 `TextOverflow`를 표시할 수도 있습니다. 이렇게 하려면 textOverflow 매개변수를 설정하세요.
+
+```kotlin
+@Composable
+fun OverflowedText() {
+    Text("Hello Compose ".repeat(50), maxLines = 2, overflow = TextOverflow.Ellipsis)
+}
+```
+
+### [텍스트 선택](https://developer.android.com/jetpack/compose/text?hl=ko#select-text)
+기본적으로 컴포저블은 선택할 수 없습니다. 
+
+즉, 기본적으로 사용자가 앱에서 텍스트를 선택하고 복사할 수 없습니다. 
+
+텍스트 선택 기능을 사용 설정하려면 텍스트 요소를 `SelectionContainer` 컴포저블로 래핑해야 합니다.
+
+```kotlin
+@Composable
+fun SelectableText() {
+    SelectionContainer {
+        Text("This text is selectable")
+    }
+}
+```
+
+선택 가능한 영역의 특정 부분에서 선택 기능을 사용 중지해야 하는 경우도 있습니다.
+이렇게 하려면 선택 불가능한 부분을 `DisableSelection` 컴포저블로 래핑해야 합니다.
+
+```kotlin
+@Composable
+fun PartiallySelectableText() {
+    SelectionContainer {
+        Column {
+            Text("This text is selectable")
+            Text("This one too")
+            Text("This one as well")
+            DisableSelection {
+                Text("But not this one")
+                Text("Neither this one")
+            }
+            Text("But again, you can select this one")
+            Text("And this one too")
+        }
+    }
+}
+```
+
+
+### AnnotatedString
+여러 스타일을 가진 텍스트의 기본 데이터 구조입니다. AnnotatedString을 구성하려면 Builder를 사용할 수 있습니다.
+
+```kotlin
+class AnnotatedString : CharSequence
+```
+
+**Sample**
+```kotlin
+@Composable
+fun MultipleStylesInText() {
+    Text(
+        buildAnnotatedString {
+            withStyle(style = SpanStyle(color = Color.Blue)) {
+                append("H")
+            }
+            append("ello ")
+
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color.Red)) {
+                append("W")
+            }
+            append("orld")
+        }
+    )
+}
+```
+
+```kotlin
+Text(
+    buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(
+                color = Color.DarkGray,
+                fontSize = 13.sp
+            )
+        ) {
+            append("Plot: ")
+        }
+
+        withStyle(
+            style = SpanStyle(
+                color = Color.DarkGray,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold
+            )
+        ) {
+            append(movie.plot)
+        }
+    }
+)
+```
+
+### Span
+기존의 뷰 시스템에서 사용하는 Span 과 비슷 합니다.
+
+스팬은 강력한 마크업 객체로 문자나 단락 수준에서 텍스트 스타일을 지정하는 데 사용할 수 있습니다. 
+
+텍스트 객체에 스팬을 연결하여 다양한 방식으로 텍스트를 변경할 수 있습니다. 
+
+예를 들면 색상 추가, 텍스트를 클릭 가능하게 만들기, 텍스트 크기 조정, 맞춤설정 방식으로 텍스트 그리기 등이 있습니다. 
+
+스팬은 TextPaint 속성을 변경하고 Canvas에 그리며 텍스트 레이아웃까지 변경할 수도 있습니다.
+
+Android는 다양한 일반 텍스트 스타일 지정 패턴을 다루는 여러 유형의 스팬을 제공합니다. 자체 스팬을 만들어 맞춤 스타일 지정을 적용할 수도 있습니다.
+
+
+### 참고
+- [AnnotatedString](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/AnnotatedString.Builder)
+- [텍스트 내 여러 스타일](https://developer.android.com/jetpack/compose/text?hl=ko#multiple-styles)
+- [Span](https://developer.android.com/guide/topics/text/spans?hl=ko)
