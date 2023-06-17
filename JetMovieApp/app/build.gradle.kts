@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.material3)
 
     implementation(libs.navigation.compose)
+    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
