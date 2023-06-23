@@ -1,7 +1,9 @@
 package com.ys.jetnote.components
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -45,4 +47,21 @@ fun NoteInputText(
         }),
         modifier = modifier
     )
+}
+
+@Composable
+fun NoteButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+) {
+    Button(
+        onClick = onClick,
+        shape = CircleShape,
+        enabled = enabled,
+        modifier = modifier
+    ) {
+        Text(text = text)
+    }
 }
