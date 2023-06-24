@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.ys.jetnote.data.NotesDataSource
 import com.ys.jetnote.screen.NoteScreen
 import com.ys.jetnote.ui.theme.JetNoteTheme
 
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NoteScreen(
-                        notes = emptyList(),
+                        notes = NotesDataSource().loadNotes(),
                         onAddNote = {},
                         onRemoveNote = {}
                     )
