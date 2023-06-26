@@ -62,9 +62,16 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+
     implementation(libs.compose.viewmodel)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.room)
+    annotationProcessor(libs.room.compiler)
+
+    implementation(libs.coroutine.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
