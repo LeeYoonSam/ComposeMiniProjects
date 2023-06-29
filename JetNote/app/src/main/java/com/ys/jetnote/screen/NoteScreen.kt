@@ -172,12 +172,12 @@ fun NoteRow(
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            Text(
-                text = note.entryDate.format(
-                    DateTimeFormatter.ofPattern("EEE, d MMM")
-                ),
-                style = MaterialTheme.typography.bodySmall
-            )
+//            Text(
+//                text = note.entryDate.format(
+//                    DateTimeFormatter.ofPattern("EEE, d MMM")
+//                ),
+//                style = MaterialTheme.typography.bodySmall
+//            )
         }
 
     }
