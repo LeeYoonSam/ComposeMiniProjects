@@ -134,3 +134,33 @@ internal const val OPTIONAL_CHANNEL = -3
 
 ### 참고
 - [Flow - conflate](com/ys/jetnote/repository/NoteRepository.kt:31)
+
+
+## Dagger Hilt
+
+### HiltViewModel
+구조체 주입을 위한 `androidx.lifecycle.ViewModel`을 식별합니다.
+`HiltViewModel`로 어노테이션된 ViewModel은 `dagger.hilt.android.lifecycle.HiltViewModelFactory`에서 생성할 수 있으며, 
+기본적으로 `dagger.hilt.android.AndroidEntryPoint`로 어노테이션된 `Activity` 또는 `Fragment`에서 검색할 수 있습니다. 
+
+`javax.inject.Inject`로 어노테이션된 생성자가 포함된 `HiltViewModel`은 `Dagger의 Hilt`에 의해 주입된 생성자 매개변수에 정의된 종속성을 갖게 됩니다.
+
+```kotlin
+@HiltViewModel
+public class DonutViewModel extends ViewModel {
+    @Inject
+    public DonutViewModel(SavedStateHandle handle, RecipeRepository repository) {
+        // ...
+    }
+}
+
+@AndroidEntryPoint
+public class CookingActivity extends AppCompatActivity {
+    public void onCreate(Bundle savedInstanceState) {
+        DonutViewModel vm = new ViewModelProvider(this).get(DonutViewModel.class);
+    }
+}
+```
+
+뷰모델의 생성자 중 정확히 하나의 생성자에는 Inject로 주석을 달아야 합니다.
+dagger.hilt.android.components.ViewModelComponent에서 사용 가능한 종속성만 뷰모델에 주입할 수 있습니다.
