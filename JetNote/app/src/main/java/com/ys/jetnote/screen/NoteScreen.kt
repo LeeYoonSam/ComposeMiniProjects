@@ -36,7 +36,7 @@ import com.ys.jetnote.components.NoteButton
 import com.ys.jetnote.components.NoteInputText
 import com.ys.jetnote.data.NotesDataSource
 import com.ys.jetnote.model.Note
-import java.time.format.DateTimeFormatter
+import com.ys.jetnote.util.formatDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -172,12 +172,10 @@ fun NoteRow(
                 style = MaterialTheme.typography.bodyMedium
             )
 
-//            Text(
-//                text = note.entryDate.format(
-//                    DateTimeFormatter.ofPattern("EEE, d MMM")
-//                ),
-//                style = MaterialTheme.typography.bodySmall
-//            )
+            Text(
+                text = formatDate(note.entryDate.time),
+                style = MaterialTheme.typography.bodySmall
+            )
         }
 
     }

@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ys.jetnote.data.NotesDataSource
-import com.ys.jetnote.model.Note
 import com.ys.jetnote.screen.NoteScreen
 import com.ys.jetnote.screen.NoteViewModel
 import com.ys.jetnote.ui.theme.JetNoteTheme
@@ -40,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
-    val notes = noteViewModel.getAllNotes()
+    val notes = noteViewModel.noteList.collectAsState().value
 
     NoteScreen(
         notes = notes,

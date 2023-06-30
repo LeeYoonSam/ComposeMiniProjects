@@ -164,3 +164,31 @@ public class CookingActivity extends AppCompatActivity {
 
 뷰모델의 생성자 중 정확히 하나의 생성자에는 Inject로 주석을 달아야 합니다.
 dagger.hilt.android.components.ViewModelComponent에서 사용 가능한 종속성만 뷰모델에 주입할 수 있습니다.
+
+## Room
+
+### Room - Entity 에서 데이터 타입을 인식하지 못해서 컴파일 에러 발생
+
+@TypeConverter 를 만들어서 선언
+```kotlin
+class DateConverter {
+    @TypeConverter
+    fun timeStampFromDate(date: Date): Long {
+        return date.time
+    }
+
+    @TypeConverter
+    fun dateFromTimestamp(timestamp: Long): Date? {
+        return Date(timestamp)
+    }
+}
+```
+
+
+```kotlin
+@Database(entities = [Note::class], version = 1, exportSchema = false)
+@TypeConverters(DateConverter::class, UUIDConverter::class)
+abstract class NoteDatabase: RoomDatabase() {
+    abstract fun noteDao(): NoteDatabaseDao
+}
+```
