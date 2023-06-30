@@ -86,3 +86,51 @@ kapt {
 ### 참고
 - [kapt에서 KSP로 이전](https://developer.android.com/studio/build/migrate-to-ksp?hl=ko#groovy)
 - [Hilt를 사용한 종속 항목 삽입](https://developer.android.com/training/dependency-injection/hilt-android?hl=ko)
+
+
+## Coroutine
+
+### conflate
+통합 채널을 통해 흐름 배출을 통합하고 별도의 코루틴에서 수집기를 실행합니다. 
+
+그 결과 수집기가 느려져 이미터가 일시 중단되는 일은 없지만 수집기는 항상 가장 최근의 값을 가져옵니다.
+
+**함수 정의**
+```kotlin
+public fun <T> Flow<T>.conflate(): Flow<T> = buffer(CONFLATED)
+```
+- 함수 정의를 보아하니 conflate 는 flow 에서 사용하는 버퍼전략인것 같습니다.
+
+```kotlin
+/**
+ * Requests a channel with an unlimited capacity buffer in the `Channel(...)` factory function.
+ */
+public const val UNLIMITED: Int = Int.MAX_VALUE
+
+/**
+ * Requests a rendezvous channel in the `Channel(...)` factory function &mdash; a channel that does not have a buffer.
+ */
+public const val RENDEZVOUS: Int = 0
+
+/**
+ * Requests a conflated channel in the `Channel(...)` factory function. This is a shortcut to creating
+ * a channel with [`onBufferOverflow = DROP_OLDEST`][BufferOverflow.DROP_OLDEST].
+ */
+public const val CONFLATED: Int = -1
+
+/**
+ * Requests a buffered channel with the default buffer capacity in the `Channel(...)` factory function.
+ * The default capacity for a channel that [suspends][BufferOverflow.SUSPEND] on overflow
+ * is 64 and can be overridden by setting [DEFAULT_BUFFER_PROPERTY_NAME] on JVM.
+ * For non-suspending channels, a buffer of capacity 1 is used.
+ */
+public const val BUFFERED: Int = -2
+
+// only for internal use, cannot be used with Channel(...)
+internal const val OPTIONAL_CHANNEL = -3
+```
+- 사용하는 버퍼의 종류는 위와 같습니다.
+- `CONFLATED` 는 오버플로우가 생기면 오래된것들은 제거하는 전략이라 항상 최근 값을 가져오게 되는것 같습니다.
+
+### 참고
+- [Flow - conflate](com/ys/jetnote/repository/NoteRepository.kt:31)
