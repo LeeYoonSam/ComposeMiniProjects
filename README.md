@@ -1,5 +1,18 @@
 # ComposeMiniProjects
 
+## [JetTrivia](./JetTrivia)
+- 클린 아키텍처 (모듈 설계)
+- Retrofit (API 통신)
+- Json 파싱
+
+## [JetNote](./JetNote)
+- Dagger Hilt (종속성 주입)
+- Repository
+- ViewModel
+
+## [JetMovie](./JetMovieApp)
+- Navigation
+
 ## [JetBizCard](./JetBizCard)
 비즈니스 프로필 카드 UI 샘플
 
