@@ -73,5 +73,62 @@ Box(modifier = Modifier
 }
 ```
 
+### UI - ScrollableTabRow
+- 가로 스크롤 가능한 탭 구현시 사용
+- 가로 스크롤을 하지 않고 고정으로 사용하려면 `TabRow` 를 사용
+
+```kotlin
+ScrollableTabRow(
+    selectedTabIndex = categories.indexOf(selectedCategory),
+    containerColor = MaterialTheme.colorScheme.background,
+    contentColor = MaterialTheme.colorScheme.onSurface,
+    edgePadding = 8.dp,
+) {
+    categories.forEach { category ->
+        CategoryTab(
+            category = category,
+            selected = category == selectedCategory,
+            onClick = { onCategorySelected(category) },
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+        )
+    }
+}
+```
+
+### viewModel()
+
+**dependency**
+```groovy
+implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+```
+
+**사옹법**
+```kotlin
+@ExperimentalAnimationApi
+@Composable
+fun MenuScreen(
+    onBackClick: () -> Unit,
+    onMenuItemClick: (Long) -> Unit
+) {
+    val menuViewModel: MenuViewModel = viewModel()
+}
+```
+- viewModel() 로 LocalViewModelStoreOwner 의 스토어를 사용하는 뷰모델 생성 및 반환
+
+###
+
+**dependency**
+```groovy
+implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+```
+
+**사옹법**
+```kotlin
+val data by viewModel.data.observeAsState(Menu(emptyList(), emptyList()))
+```
+- MutableState 값을 할당하고 캐시되도록 remember 사용
+- 라이프사이클오너를 이용해 LiveData의 옵저버를 스스로 등록, 옵저버에 값이 변경되면 state 값을 변경
+- 내부적으로 DisposableEffect 를 사용해서 dispose 될때 옵저버 제거
+
 ### 참고
 - [McCompose](https://github.com/hitanshu-dhawan/McCompose/tree/main)

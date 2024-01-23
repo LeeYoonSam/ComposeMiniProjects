@@ -11,4 +11,6 @@ val Amber500 = Color(0xFFFFC107)
 val Amber700 = Color(0xFFFFA000)
 
 val Gray100 = Color(0xFFF5F5F5)
+val Gray300 = Color(0xFFE0E0E0)
+val Gray600 = Color(0xFF757575)
 val Gray900 = Color(0xFF212121)
