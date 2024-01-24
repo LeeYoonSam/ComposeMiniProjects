@@ -36,7 +36,9 @@ fun SpotlightCard(
     val isDarkTheme = isSystemInDarkTheme()
 
     Surface(
-        modifier = Modifier.width(160.dp),
+        modifier = Modifier
+            .width(160.dp)
+            .clickable(onClick = onClick),
         shape = MaterialTheme.shapes.medium,
         color = remember { getRandomBackgroundColor(isDarkTheme) },
         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -44,7 +46,6 @@ fun SpotlightCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onClick)
                 .padding(vertical = 16.dp)
         ) {
             Text(
@@ -59,7 +60,7 @@ fun SpotlightCard(
 
         Box(modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.00f))
+            .aspectRatio(1f))
         {
             Layout(
                 content = {
@@ -87,7 +88,6 @@ fun SpotlightCard(
                 }
             }
         }
-
     }
 }
 
