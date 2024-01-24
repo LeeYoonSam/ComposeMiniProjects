@@ -130,5 +130,23 @@ val data by viewModel.data.observeAsState(Menu(emptyList(), emptyList()))
 - 라이프사이클오너를 이용해 LiveData의 옵저버를 스스로 등록, 옵저버에 값이 변경되면 state 값을 변경
 - 내부적으로 DisposableEffect 를 사용해서 dispose 될때 옵저버 제거
 
+### Scaffold 사용시
+```kotlin
+Scaffold(
+    topBar = {
+        ...
+    }
+) { paddingValues ->
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+
+    }
+}
+```
+- Scaffold 를 사용할때는 .padding(paddingValues)
+
 ### 참고
 - [McCompose](https://github.com/hitanshu-dhawan/McCompose/tree/main)
