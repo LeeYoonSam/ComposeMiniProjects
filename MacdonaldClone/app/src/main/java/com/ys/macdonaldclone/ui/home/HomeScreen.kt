@@ -27,7 +27,7 @@ import com.ys.macdonaldclone.ui.theme.MacdonaldCloneTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onCategoryClick: () -> Unit,
+    onCategoryClick: (categoryId: Long) -> Unit,
     onMenuItemClick: () -> Unit,
 ) {
     val data = HomeRepository.getHomeData()
@@ -72,7 +72,7 @@ fun HomeScreen(
                         SpotlightCard(
                             title = category.name,
                             imageUrl = category.image,
-                            onClick = onCategoryClick,
+                            onClick =  { onCategoryClick(category.id) },
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                     }

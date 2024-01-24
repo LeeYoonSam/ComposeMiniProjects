@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,6 +41,7 @@ import kotlinx.coroutines.launch
 @ExperimentalAnimationApi
 @Composable
 fun MenuScreen(
+    categoryId: Long? = null,
     onBackClick: () -> Unit,
     onMenuItemClick: (Long) -> Unit,
     viewModel: MenuViewModel = viewModel()
@@ -49,6 +51,17 @@ fun MenuScreen(
     val lazyListState = rememberLazyListState()
 
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        categoryId?.run {
+            val startCategory = data.categories.firstOrNull { it.id == this }
+            startCategory?.getIndex(data)?.let { selectedCategoryIndex ->
+                coroutineScope.launch {
+                    lazyListState.scrollToItem(selectedCategoryIndex)
+                }
+            }
+        }
+    }
 
     Scaffold (
         topBar = {

@@ -29,12 +29,27 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "home") {
                     composable(route = "home") {
                         HomeScreen(
-                            onCategoryClick = { navController.navigate("menu") },
-                            onMenuItemClick = { navController.navigate("menu") },
+                            onCategoryClick = { categoryId ->
+                                // categoryId argument 전달
+                                navController.navigate("menu?/$categoryId")
+                            },
+                            onMenuItemClick = {
+                                // categoryId argument 없이 navigate 를 하면 composable 에 등록된 arguments의 defaultValue 에 의해서 기본 값을 자동 설정 ex) menu/0 으로 설정
+                                navController.navigate("menu")
+                            },
                         )
                     }
-                    composable(route = "menu") {
+                    composable(
+                        // ?을 추가해서 categoryId 을 옵셔널로 받을수 있도록 허용
+                        route = "menu?/{categoryId}",
+                        arguments = listOf(navArgument("categoryId") {
+                            type = NavType.LongType
+                            // default 값을 설정하지 않으면 categoryId 를 옵셔널로 사용할수 없음
+                            defaultValue = 0
+                        })
+                    ) { backStackEntry ->
                         MenuScreen(
+                            categoryId = backStackEntry.arguments?.getLong("categoryId"),
                             onBackClick = { navController.navigateUp() },
                             onMenuItemClick = { menuItemId ->
                                 navController.navigate("details/$menuItemId")
